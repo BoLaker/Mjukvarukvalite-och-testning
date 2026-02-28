@@ -1,0 +1,12 @@
+# Maven
+target/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Compiled class files
+*.class
+
+# Mac-specifika filer (om någon av er använder Mac)
+.DS_Store
