@@ -107,7 +107,4 @@ public class FoodContainerTest {
         assertEquals(10, container.getWetFood(), "Wet food should be reduced to 10");
         assertEquals(10, container.getTreats(), "Treats should be reduced to 10");
     }
-
-
-
 }

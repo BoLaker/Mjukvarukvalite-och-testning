@@ -9,7 +9,7 @@ public class MealPlan {
     private int amtWater;
     private int amtWetFood;
     private int amtTreats;
-    
+
     /**
      * Creates a default meal plan for the pet feeder.
      */
@@ -22,7 +22,9 @@ public class MealPlan {
         this.energyCost = 0;
     }
 
-    /** Per-unit energy values (abstract "energy points", can be read as kcal). */
+    /**
+     * Per-unit energy values (abstract "energy points", can be read as kcal).
+     */
     private static final int KIBBLE_ENERGY = 10;
     private static final int WATER_ENERGY = 5;
     private static final int WETFOOD_ENERGY = 15;
@@ -35,13 +37,14 @@ public class MealPlan {
     private void updateEnergyCost() {
         this.energyCost =
                 (amtKibble * KIBBLE_ENERGY) +
-                (amtWater * WATER_ENERGY) +
-                (amtWetFood * WETFOOD_ENERGY) +
-                (amtTreats * TREATS_ENERGY);
+                        (amtWater * WATER_ENERGY) +
+                        (amtWetFood * WETFOOD_ENERGY) +
+                        (amtTreats * TREATS_ENERGY);
     }
-    
+
     /**
      * Returns the amount of treats in the meal plan.
+     *
      * @return int
      */
     public int getAmtTreats() {
@@ -50,6 +53,7 @@ public class MealPlan {
 
     /**
      * Sets the amount of treats required for the meal.
+     *
      * @param treats The amount of treats to set (as a string).
      * @throws MealPlanException if the input is not a positive integer.
      */
@@ -70,6 +74,7 @@ public class MealPlan {
 
     /**
      * Returns the amount of kibble in the meal plan.
+     *
      * @return int
      */
     public int getAmtKibble() {
@@ -78,6 +83,7 @@ public class MealPlan {
 
     /**
      * Sets the amount of kibble required for the meal.
+     *
      * @param kibble The amount of kibble to set (as a string).
      * @throws MealPlanException if the input is not a positive integer.
      */
@@ -98,6 +104,7 @@ public class MealPlan {
 
     /**
      * Returns the amount of water in the meal plan.
+     *
      * @return int
      */
     public int getAmtWater() {
@@ -106,10 +113,11 @@ public class MealPlan {
 
     /**
      * Sets the amount of water required for the meal.
+     *
      * @param water The amount of water to set (as a string).
      * @throws MealPlanException if the input is not a positive integer.
      */
-    public void setAmtWater(String water) throws MealPlanException{
+    public void setAmtWater(String water) throws MealPlanException {
         int amtWater = 0;
         try {
             amtWater = Integer.parseInt(water);
@@ -126,6 +134,7 @@ public class MealPlan {
 
     /**
      * Returns the amount of wet food in the meal plan.
+     *
      * @return int
      */
     public int getAmtWetFood() {
@@ -134,6 +143,7 @@ public class MealPlan {
 
     /**
      * Sets the amount of wet food required for the meal.
+     *
      * @param wetFood The amount of wet food to set (as a string).
      * @throws MealPlanException if the input is not a positive integer.
      */
@@ -154,6 +164,7 @@ public class MealPlan {
 
     /**
      * Returns the name of the meal plan.
+     *
      * @return String
      */
     public String getName() {
@@ -162,24 +173,27 @@ public class MealPlan {
 
     /**
      * Sets the name of the meal plan.
+     *
      * @param name The name to set.
      */
     public void setName(String name) {
-        if(name != null) {
+        if (name != null) {
             this.name = name;
         }
     }
 
     /**
      * Returns the energy cost of the meal plan.
+     *
      * @return int
      */
     public int getEnergyCost() {
         return energyCost;
     }
-    
+
     /**
      * Returns the name of the meal plan.
+     *
      * @return String
      */
     public String toString() {
@@ -208,6 +222,7 @@ public class MealPlan {
                 return false;
         } else if (!name.equals(other.name))
             return false;
-        return true;
+
+        return this.amtKibble == other.amtKibble && this.amtWater == other.amtWater && this.amtWetFood == other.amtWetFood && this.amtTreats == other.amtTreats;
     }
 }

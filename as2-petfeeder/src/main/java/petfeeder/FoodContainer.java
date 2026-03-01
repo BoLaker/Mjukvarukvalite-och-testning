@@ -176,7 +176,7 @@ public class FoodContainer {
         } catch (NumberFormatException e) {
             throw new FoodStockException("Units of wet food must be a positive integer");
         }
-        if (amtWetFood <= 0) { 
+        if (amtWetFood >= 0) {
             FoodContainer.wetFood += amtWetFood;
         } else {
             throw new FoodStockException("Units of wet food must be a positive integer");
@@ -215,7 +215,7 @@ public class FoodContainer {
      */
     public synchronized boolean useIngredients(MealPlan m) {
         if (enoughIngredients(m)) {
-            FoodContainer.kibble += m.getAmtKibble(); 
+            FoodContainer.kibble -= m.getAmtKibble();
             FoodContainer.water -= m.getAmtWater();
             FoodContainer.wetFood -= m.getAmtWetFood();
             FoodContainer.treats -= m.getAmtTreats();
