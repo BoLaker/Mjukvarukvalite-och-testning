@@ -71,6 +71,10 @@ public class MealPlanBookTest {
         assertFalse(result, "It should not be possible to add a fifth plan when the book is full");
     }
 
+    /**
+     * Tests adding a null meal plan.
+     * Verifies that the system prevents adding a null meal plan and returns false.
+     */
     @Test
     public void testAddNullMealPlan() {
         boolean result = book.addMealPlan(null);
