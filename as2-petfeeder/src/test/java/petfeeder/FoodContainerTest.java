@@ -78,14 +78,47 @@ public class FoodContainerTest {
     }
 
     /**
-     * Tests checking if there are enough ingredients when stock is too low.
+     * Tests checking if there are enough ingredients when kibble stock is too low.
      */
     @Test
-    public void testEnoughIngredientsInsufficient() throws Exception {
+    public void testEnoughIngredientsInsufficientKibble() throws Exception {
         MealPlan meal = new MealPlan();
         meal.setAmtKibble("20"); // Stock is only 15
 
-        assertFalse(container.enoughIngredients(meal), "Should return false when stock is insufficient");
+        assertFalse(container.enoughIngredients(meal), "Should return false when kibble stock is insufficient");
+    }
+
+    /**
+     * Tests checking if there are enough ingredients when water stock is too low.
+     */
+    @Test
+    public void testEnoughIngredientsInsufficientWater() throws Exception {
+        MealPlan meal = new MealPlan();
+        meal.setAmtWater("20"); // Stock is only 15
+
+        assertFalse(container.enoughIngredients(meal), "Should return false when water stock is insufficient");
+    }
+
+    /**
+     * Tests checking if there are enough ingredients when wet food stock is too low.
+     */
+    @Test
+    public void testEnoughIngredientsInsufficientWetFood() throws Exception {
+        MealPlan meal = new MealPlan();
+        meal.setAmtWetFood("20"); // Stock is only 15
+
+        assertFalse(container.enoughIngredients(meal), "Should return false when wet food stock is insufficient");
+    }
+
+    /**
+     * Tests checking if there are enough ingredients when treats stock is too low.
+     */
+    @Test
+    public void testEnoughIngredientsInsufficientTreats() throws Exception {
+        MealPlan meal = new MealPlan();
+        meal.setAmtTreats("20"); // Stock is only 15
+
+        assertFalse(container.enoughIngredients(meal), "Should return false when treats stock is insufficient");
     }
 
     /**
@@ -107,4 +140,53 @@ public class FoodContainerTest {
         assertEquals(10, container.getWetFood(), "Wet food should be reduced to 10");
         assertEquals(10, container.getTreats(), "Treats should be reduced to 10");
     }
+
+    /**
+     * Tests using ingredients when stock is insufficient, expecting the method to return false
+     * and leave the stock unchanged.
+     */
+    @Test
+    public void testUseIngredientsFailure() throws Exception {
+        MealPlan meal = new MealPlan();
+        meal.setAmtKibble("20"); // Stock is only 15
+
+        boolean result = container.useIngredients(meal);
+
+        assertFalse(result, "Should return false when there are not enough ingredients");
+        assertEquals(15, container.getKibble(), "Kibble stock should remain unchanged");
+        assertEquals(15, container.getWater(), "Water stock should remain unchanged");
+        assertEquals(15, container.getWetFood(), "Wet food stock should remain unchanged");
+        assertEquals(15, container.getTreats(), "Treats stock should remain unchanged");
+    }
+
+    // additional tests for line coverage purposes.
+
+    /**
+     * Tests using invalid input such as negative or non-numeric values for treats, expecting exceptions.
+     */
+    @Test
+    void testAddTreatsFailure() {
+        assertThrows(FoodStockException.class, () -> container.addTreats("-1"), "Adding a negative amount of treats should throw a FoodStockException");
+        assertThrows(FoodStockException.class, () -> container.addTreats("abc"), "Adding a non-numeric string for treats should throw a FoodStockException");
+    }
+
+    /**
+     * Tests using invalid input such as negative or non-numeric values for treats, expecting exceptions.
+     */
+    @Test
+    void testAddWaterFailure() {
+        assertThrows(FoodStockException.class, () -> container.addWater("-1"), "Adding a negative amount of water should throw a FoodStockException");
+        assertThrows(FoodStockException.class, () -> container.addWater("abc"), "Adding a non-numeric string for water should throw a FoodStockException");
+    }
+
+    /**
+     * Tests using invalid input such as negative or non-numeric values for treats, expecting exceptions.
+     */
+    @Test
+    void testAddWetFoodFailure() {
+        assertThrows(FoodStockException.class, () -> container.addWetFood("-1"), "Adding a negative amount of wet food should throw a FoodStockException");
+        assertThrows(FoodStockException.class, () -> container.addWetFood("abc"), "Adding a non-numeric string for wet food should throw a FoodStockException");
+    }
+
+
 }
