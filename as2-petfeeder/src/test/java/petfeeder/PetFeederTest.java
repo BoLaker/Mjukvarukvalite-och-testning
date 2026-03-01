@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,6 +19,9 @@ public class PetFeederTest {
         feeder = new PetFeeder();
     }
 
+    /** 
+    * Helper method to create a MealPlan with specified ingredient amounts.
+    */
     private MealPlan createTestMealPlan(String kibble, String treats, String water, String wetFood) throws Exception {
         MealPlan plan = new MealPlan();
         plan.setName("TestMeal");
@@ -30,7 +32,10 @@ public class PetFeederTest {
         return plan;
     }
 
-    /* Test dispensing a valid meal
+    
+    /**
+     * Test dispensing a meal when food and energy are sufficient.
+     * Should succeed and decrease remaining energy.
      */
 
     @Test
@@ -66,6 +71,11 @@ public class PetFeederTest {
         assertFalse(result, "Should return false when the selected meal plan slot is null");
     }
 
+    /**
+     * Test dispensing a meal when stock is insufficient.
+     * Should return false and leave energy budget unchanged.
+     */
+
     @Test
     void testDispenseMealInsufficientstock() throws Exception {
         // Energy cost: 5*10 + 1*5 + 1*15 + 1*20 = 90, well within ENERGY_LIMIT=500
@@ -90,6 +100,10 @@ public class PetFeederTest {
         assertEquals(before, after, "Energy budget should be unchanged when dispense fails");
     }
 
+    /**
+     * Test dispensing a meal that exceeds remaining energy budget.
+     * Should return false and leave energy budget unchanged.
+     */
     @Test
     void testDispenseMealInsufficientEnergy() throws Exception {
         MealPlan plan = createTestMealPlan("20", "10", "10", "10");
@@ -104,6 +118,10 @@ public class PetFeederTest {
         assertEquals(before, after);
     }
 
+    /**
+     * Test adding a valid meal plan.
+     * Should return true and store the plan correctly.
+     */
     @Test
     void testAddMealplanValidInput() throws Exception {
         MealPlan plan = createTestMealPlan("5", "2", "1", "1");
@@ -114,6 +132,10 @@ public class PetFeederTest {
         assertEquals(plan, feeder.getMealPlans()[0]);
     }
 
+    /**
+     * Test adding a null meal plan.
+     * Should return false.
+     */
     @Test
     void testAddMealPlanInvalidInput() throws Exception {
 
@@ -121,6 +143,10 @@ public class PetFeederTest {
         assertFalse(result);
     }
 
+    /**
+     * Test editing an existing meal plan.
+     * Should update the plan and return the old name.
+     */
     @Test
     void testEditExistingMealPlan() throws Exception {
         MealPlan plan = createTestMealPlan("5", "2", "1", "1");
@@ -133,6 +159,10 @@ public class PetFeederTest {
         assertEquals(newplan, feeder.getMealPlans()[0]);
     }
 
+    /**
+     * Test editing a non-existing meal plan.
+     * Should return null.
+     */
     @Test
     void testEditNoneExistingMealPlan() throws Exception {
         MealPlan newplan = createTestMealPlan("10", "5", "6", "4");
@@ -141,6 +171,10 @@ public class PetFeederTest {
         assertNull(result);
     }
 
+    /**
+     * Test deleting an existing meal plan.
+     * Should return the name and remove the plan.
+     */
     @Test
     void testDeleteValidMealplan() throws Exception {
         MealPlan plan = createTestMealPlan("5", "2", "1", "1");
@@ -150,6 +184,11 @@ public class PetFeederTest {
         assertEquals(result, plan.getName());
         assertNull(feeder.getMealPlans()[0]);
     }
+
+    /**
+     * Test deleting a non-existing meal plan.
+     * Should return null and leave other plans intact.
+     */
 
     @Test
     void testDeleteNoneExistingMealPlan() throws Exception {
@@ -162,6 +201,10 @@ public class PetFeederTest {
         assertEquals(plan, feeder.getMealPlans()[0]);
     }
 
+    /**
+     * Test replenishing food with valid input.
+     * Stock should increase accordingly.
+     */
     @Test
     void testReplenishFoodValidInput() throws Exception {
         feeder.replenishFood("20", "0", "0", "0");
@@ -169,6 +212,10 @@ public class PetFeederTest {
         assertTrue(feeder.checkFoodStock().contains("Kibble: 35"));
     }
 
+    /**
+     * Test replenishing food with invalid (non-numeric) input.
+     * Should throw FoodStockException and leave stock unchanged.
+     */
     @Test
     void testReplenishFoodInvalidInput() throws Exception {
 
@@ -179,6 +226,10 @@ public class PetFeederTest {
         assertEquals(stockBefore, feeder.checkFoodStock());
     }
 
+    /**
+     * Test replenishing food with negative input.
+     * Should throw FoodStockException and leave stock unchanged.
+     */
     @Test
     void testReplenishFoodNegativeInput() throws Exception {
 
