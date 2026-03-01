@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,9 +20,9 @@ public class PetFeederTest {
         feeder = new PetFeeder();
     }
 
-    /** 
-    * Helper method to create a MealPlan with specified ingredient amounts.
-    */
+    /**
+     * Helper method to create a MealPlan with specified ingredient amounts.
+     */
     private MealPlan createTestMealPlan(String kibble, String treats, String water, String wetFood) throws Exception {
         MealPlan plan = new MealPlan();
         plan.setName("TestMeal");
@@ -32,7 +33,7 @@ public class PetFeederTest {
         return plan;
     }
 
-    
+
     /**
      * Test dispensing a meal when food and energy are sufficient.
      * Should succeed and decrease remaining energy.
@@ -116,6 +117,11 @@ public class PetFeederTest {
 
         assertFalse(result);
         assertEquals(before, after);
+    }
+
+    @Test
+    void testDispenseMealNegativeIndex() {
+        assertFalse(feeder.dispenseMeal(-1), "Should return false when the meal plan index is negative");
     }
 
     /**
