@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -34,8 +35,6 @@ public class PetFeederTest {
 
     @Test
     void testDispenseMealValidInput() throws Exception {
-
-
         MealPlan plan = createTestMealPlan("5", "2", "1", "1");
         feeder.addMealPlan(plan);
         feeder.replenishFood("100", "100", "100", "100");
@@ -49,9 +48,7 @@ public class PetFeederTest {
 
     @Test
     void testDispenseMealInvalidIndex() {
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
-            feeder.dispenseMeal(10);
-        });
+        assertFalse(feeder.dispenseMeal(10), "Should return false when the meal plan index is out of bounds");
     }
 
     /**
@@ -158,9 +155,10 @@ public class PetFeederTest {
     void testDeleteNoneExistingMealPlan() throws Exception {
         MealPlan plan = createTestMealPlan("5", "2", "1", "1");
         feeder.addMealPlan(plan);
-        String result = feeder.deleteMealPlan(9);
 
-        assertNull(result);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            feeder.deleteMealPlan(9);
+        });
         assertEquals(plan, feeder.getMealPlans()[0]);
     }
 

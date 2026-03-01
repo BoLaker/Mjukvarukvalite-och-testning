@@ -2,6 +2,7 @@ package petfeeder;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -68,6 +69,12 @@ public class MealPlanBookTest {
         boolean result = book.addMealPlan(extraPlan);
 
         assertFalse(result, "It should not be possible to add a fifth plan when the book is full");
+    }
+
+    @Test
+    public void testAddNullMealPlan() {
+        boolean result = book.addMealPlan(null);
+        assertFalse(result, "Adding a null meal plan should return false");
     }
 
     /**
