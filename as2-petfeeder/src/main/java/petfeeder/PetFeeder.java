@@ -87,7 +87,7 @@ public class PetFeeder {
     public synchronized boolean dispenseMeal(int mealPlanToPurchase) {
         boolean dispensed = false;
         MealPlan[] plans = getMealPlans();
-        if(mealPlanToPurchase<0 || mealPlanToPurchase >=plans.length){return false;}
+
         if (plans[mealPlanToPurchase] == null) {
             dispensed = false;
         } else {

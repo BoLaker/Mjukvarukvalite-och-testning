@@ -40,7 +40,6 @@ public class MealPlanBook {
         //find out otherwise
         boolean exists = false;
         //Check that meal plan doesn't already exist in array
-        if(m==null){return false;}
         for (int i = 0; i < mealPlanArray.length; i++) {
             if (m.equals(mealPlanArray[i])) {
                 exists = true;
@@ -69,7 +68,6 @@ public class MealPlanBook {
      * @return String The name of the deleted meal plan.
      */
     public synchronized String deleteMealPlan(int mealPlanToDelete) {
-        if(mealPlanToDelete<0 || mealPlanToDelete >= mealPlanArray.length){return null;}
         if (mealPlanArray[mealPlanToDelete] != null) {
             String name = mealPlanArray[mealPlanToDelete].getName();
             mealPlanArray[mealPlanToDelete] = null;
@@ -88,7 +86,6 @@ public class MealPlanBook {
      * @return String The name of the original meal plan.
      */
     public synchronized String editMealPlan(int mealPlanToEdit, MealPlan newMealPlan) {
-        if(mealPlanToEdit<0 || mealPlanToEdit >= mealPlanArray.length){return null;}
         if (mealPlanArray[mealPlanToEdit] != null) {
             String name = mealPlanArray[mealPlanToEdit].getName();
             mealPlanArray[mealPlanToEdit] = newMealPlan;
