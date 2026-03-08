@@ -188,5 +188,15 @@ public class FoodContainerTest {
         assertThrows(FoodStockException.class, () -> container.addWetFood("abc"), "Adding a non-numeric string for wet food should throw a FoodStockException");
     }
 
+    /**
+     * Tests setting the treats to the boundary value of 0.
+     * This test was added to expose Mutant 2.
+     */
+    @Test
+    public void testSetTreatsBoundaryValueZero() {
+        container.setTreats(0);
+        assertEquals(0, container.getTreats(), "Treats should be successfully set to 0");
+    }
+
 
 }
